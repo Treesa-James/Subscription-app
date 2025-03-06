@@ -1,0 +1,28 @@
+{% comment %} Custom Page for Theme Extension {% endcomment %}
+<h1>Subscription Plan</h1>
+
+{% if customer %}
+  <h2>Hello, {{ customer.first_name }}!</h2>
+
+  {% assign subscriptions = customer.metafields.subscriptions.items %}
+  
+  {% if subscriptions and subscriptions.size > 0 %}
+  <ul>
+    {% for sub in subscriptions %}
+      <li>{{ sub.name }} - Renews every {{ sub.billing_cycle }} months</li>
+    {% endfor %}
+  </ul>
+{% else %}
+    <p>You have no active subscriptions.</p>
+  {% endif %}
+{% else %}
+  <p>Please <a href="/account/login">log in</a> to see your subscriptions.</p>
+{% endif %}
+
+{% schema %}
+{
+  "name": "User Subscription Block",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}
